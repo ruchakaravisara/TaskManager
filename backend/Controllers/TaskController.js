@@ -22,9 +22,33 @@ const getAllTask = async (req, res) => {
     }
 };
 
+const updateTaskById = async (req, res) => {
+    try {
+        const id =req.params.id;
+        const body = req.body;
+        const obj ={$set:{...body}}
+       await TaskModel.findByIdAndUpdate(id,obj)
+        res.status(200).json({ message: 'Task updated successfully', success: true });
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to update Task', success: false, error: err.message });
+    }
+};
+
+const deleteTaskById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await TaskModel.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Task Delete Successfully', success: true});
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to Delete Tasks', success: false, error: err.message });
+    }
+};
+
 
 module.exports={
     createTask,
     getAllTask,
+    updateTaskById,
+    deleteTaskById,
  
 }
