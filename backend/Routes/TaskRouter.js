@@ -1,10 +1,8 @@
-const { createTask } = require('../Controllers/TaskController');
+const { createTask, getAllTask } = require('../Controllers/TaskController');
 
 const router = require('express').Router();
 
-router.get('/',(req, res) => {
-    res.send('All tasks');
-})
+router.get('/',getAllTask)
 
 //create a new task
 router.post('/',createTask)
