@@ -14,12 +14,20 @@ const TaskList = () => {
   }, []);
 
   const fetchTasks = async () => {
-    const response = await axios.get("http://localhost:8080/tasks");
+    const response = await axios.get(`http://localhost:8080/tasks/${localStorage.getItem('id')}`,{
+      headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+      }
+  });
     setTasks(response.data.data);
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:8080/tasks/${id}`);
+    await axios.delete(`http://localhost:8080/tasks/${id}`,{
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+    }
+    });
     fetchTasks();
   };
 

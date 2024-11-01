@@ -21,18 +21,27 @@ const TaskForm = ({ currentTask, onClose }) => {
   }, [currentTask]);
 
   const handleSubmit = async (e) => {
+    const api = axios.create({
+      baseURL: "http://localhost:8080",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
     e.preventDefault();
-    const taskData = { title, description, status };
+    const taskData = { title, description, status, user: localStorage.getItem("id") };
 
     if (currentTask) {
       // Update task
-      await axios.put(
-        `http://localhost:8080/tasks/${currentTask._id}`,
+      await api.put(
+        `/tasks/${currentTask._id}`,
         taskData
       );
     } else {
       // Create new task
-      await axios.post("http://localhost:8080/tasks", taskData);
+      await api.post(
+        "/tasks",
+        taskData
+      );
     }
 
     onClose();

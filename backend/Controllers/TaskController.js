@@ -15,7 +15,8 @@ const createTask =async(req,res)=>{
 //get all tasks
 const getAllTask = async (req, res) => {
     try {
-        const data = await TaskModel.find({});
+        const id =req.params.id;
+        const data = await TaskModel.find({user: id});
         res.status(200).json({ message: 'All Tasks', success: true, data });
     } catch (err) {
         res.status(500).json({ message: 'Failed to Get All Tasks', success: false, error: err.message });

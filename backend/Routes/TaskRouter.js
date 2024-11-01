@@ -1,15 +1,18 @@
 const { createTask, getAllTask, updateTaskById, deleteTaskById } = require('../Controllers/TaskController');
+const authenticateToken = require('../middleware/authMiddleware'); // Ensure you import your middleware
 
 const router = require('express').Router();
 
-router.get('/',getAllTask);
+// Get all tasks (protected route)
+router.get('/:id', authenticateToken, getAllTask);
 
-//create a new task
-router.post('/',createTask);
+// Create a new task (protected route)
+router.post('/', authenticateToken, createTask);
 
-router.put('/:id',updateTaskById);
+// Update a task by ID (protected route)
+router.put('/:id', authenticateToken, updateTaskById);
 
-router.delete('/:id', deleteTaskById);
-
+// Delete a task by ID (protected route)
+router.delete('/:id', authenticateToken, deleteTaskById);
 
 module.exports = router;  
